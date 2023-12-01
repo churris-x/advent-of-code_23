@@ -4,10 +4,23 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 
-const placeholder = () => {};
+const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-// console.log('1) eg: ', placeholder(eg));
-// console.log('1) input: ', placeholder(input));
+const recoverValue = document => document
+    .split('\n')
+    .reduce((sum, line) => {
+        const numbers = line
+            .split('')
+            .filter(letter => !alphabet.includes(letter));
+
+        const number = +[numbers[0], numbers.slice(-1)].join('')
+
+        if (number) return number + sum;
+        return sum;
+    }, 0);
+
+console.log('1) eg: ', recoverValue(eg));
+console.log('1) input: ', recoverValue(input));
 
 // Part 2 ---------------------------------------------------------------------
 
@@ -20,6 +33,6 @@ const placeholder = () => {};
 Wrong guesses:
 
 Correct:
-    1) 
+    1) 56049
     2) 
 */
