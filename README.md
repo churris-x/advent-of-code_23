@@ -24,6 +24,10 @@ Solutions to each day, in the following format:
 ## Todo:
 - [ ] Parse and download the task exercise as well
 
+## FAQ
+- How to get your Auth token
+    - Log in to the advent of code website, open the inspector got to Cookies. Click on `session` and copy the value.
+
 ## Previous years
 - [2022](https://github.com/churris-x/advent-of-code_22)
 
