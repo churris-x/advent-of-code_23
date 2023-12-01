@@ -4,7 +4,10 @@
   "description": "Solutions to each puzzle from 2023",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "sh scripts/freshInstall.sh",
+    "fetch": "sh scripts/fetch.sh",
+    "newDay": "sh scripts/newDay.sh",
+    "delete": "sh scripts/delete.sh"
   },
   "repository": {
     "type": "git",
