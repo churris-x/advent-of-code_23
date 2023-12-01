@@ -22,6 +22,10 @@ Solutions to each day, in the following format:
 - `$ npm run delete <days>` or input which days you want to delete, confirm with <kbd>y</kbd>
 
 ## Todo:
+- [ ] Parse and download the task exercise as well
+
+## Previous years
+- [2022](https://github.com/churris-x/advent-of-code_22)
 
 ## License
 
