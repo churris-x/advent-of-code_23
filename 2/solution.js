@@ -3,9 +3,6 @@ const eg = fs.readFileSync(require.resolve('./eg.txt')).toString().slice(0, -1);
 const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0, -1);
 
 // Part 1 ---------------------------------------------------------------------
-/*
-    created array of arrays ['Game 4', numbers...]
-*/
 
 const colors = {
     red: 12,
@@ -44,10 +41,6 @@ console.log('1) input: ', addPossibleGames(input));
 
 // Part 2 ---------------------------------------------------------------------
 
-/*
-    Will have to change the logic a bit
-*/
-
 const findPossibleCubes = games => games
     .split('\n')
     .map(game => game
@@ -57,33 +50,20 @@ const findPossibleCubes = games => games
     )
     .reduce((sum, game) => {
 
-        const isPossible = game
-            .slice(1)
-            .reduce((isGamePossible, cubes) => {
-                const [_, number, color] = cubes.split(' ');
-
-                if (!isGamePossible) return false;
-
-                return +number <= colors[color];
-            }, true);
-
-
-        const powerSet = game
+        const power = game
             .slice(1)
             .reduce((colors, cubes, index, array) => {
                 const [_, number, color] = cubes.split(' ');
 
                 if (+number > colors[color]) colors[color] = +number;
 
-                let {red, green, blue} = colors;
+                const {red, green, blue} = colors;
                 if (index === array.length -1) return red * green * blue;
 
                 return colors;
-
             }, {red: 1, green: 1, blue: 1})
 
-
-            return sum + powerSet;
+            return sum + power;
     }, 0)
 
 console.log('2) eg: ', findPossibleCubes(eg));
