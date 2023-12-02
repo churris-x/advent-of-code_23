@@ -24,12 +24,9 @@ console.log('1) input: ', recoverValue(input));
 
 // Part 2 ---------------------------------------------------------------------
 /*
-    ok I honestly think missing information as a premise is
-    a bad way to format problems :-(
-
     Hidden rules:
-    xxxx3xxxx = 33
-    eightwo = 82
+        xxxx3xxxx = 33
+        eightwo = 82
 */
 
 const fullNumbers = [
@@ -61,12 +58,13 @@ const parseRecoverValue = document => document
 
                 let currentLine = sum + letter;
 
+                // if there are numbers in the line, parse them
                 if (fullNumbers.some(number => currentLine.includes(number))) {
                     fullNumbers.forEach((number, index) => {
                         currentLine = currentLine
+                            // trick to allow for intersecting number to be parsed
                             .replace(number, `${number[0]}${index + 1}${number.slice(-1)}`);
                     });
-
                 }
 
                 return currentLine;
