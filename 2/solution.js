@@ -13,7 +13,7 @@ const colors = {
     blue: 14
 };
 
-const placeholder = games => games
+const addPossibleGames = games => games
     .split('\n')
     .map(game => game
         .split(',')
@@ -35,24 +35,64 @@ const placeholder = games => games
 
         if (!isPossible) return sum;
 
-        // returns the Game ID sum
+        // returns the Game ID + sum
         return +game[0].split(' ')[1] + sum;
     }, 0)
 
-console.log('1) eg: ', placeholder(eg));
-console.log('1) input: ', placeholder(input));
+console.log('1) eg: ', addPossibleGames(eg));
+console.log('1) input: ', addPossibleGames(input));
 
 // Part 2 ---------------------------------------------------------------------
 
-// const placeholder = () => {};
+/*
+    Will have to change the logic a bit
+*/
 
-// console.log('2) eg: ', placeholder(eg));
-// console.log('2) input: ', placeholder(input));
+const findPossibleCubes = games => games
+    .split('\n')
+    .map(game => game
+        .split(',')
+        .flatMap(i => i.split(';'))
+        .flatMap(i => i.split(':'))
+    )
+    .reduce((sum, game) => {
+
+        const isPossible = game
+            .slice(1)
+            .reduce((isGamePossible, cubes) => {
+                const [_, number, color] = cubes.split(' ');
+
+                if (!isGamePossible) return false;
+
+                return +number <= colors[color];
+            }, true);
+
+
+        const powerSet = game
+            .slice(1)
+            .reduce((colors, cubes, index, array) => {
+                const [_, number, color] = cubes.split(' ');
+
+                if (+number > colors[color]) colors[color] = +number;
+
+                let {red, green, blue} = colors;
+                if (index === array.length -1) return red * green * blue;
+
+                return colors;
+
+            }, {red: 1, green: 1, blue: 1})
+
+
+            return sum + powerSet;
+    }, 0)
+
+console.log('2) eg: ', findPossibleCubes(eg));
+console.log('2) input: ', findPossibleCubes(input));
 
 /*
 Wrong guesses:
 
 Correct:
     1) 2369
-    2) 
+    2) 66363
 */
