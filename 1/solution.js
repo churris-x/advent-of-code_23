@@ -23,12 +23,13 @@ console.log('1) eg: ', recoverValue(eg));
 console.log('1) input: ', recoverValue(input));
 
 // Part 2 ---------------------------------------------------------------------
-
 /*
-    jesus christ almighty, number parsing
-    I will try to avoid using regex lol
+    ok I honestly think missing information as a premise is
+    a bad way to format problems :-(
 
-    this is absolutely cursed
+    Hidden rules:
+    xxxx3xxxx = 33
+    eightwo = 82
 */
 
 const fullNumbers = [
@@ -44,7 +45,7 @@ const fullNumbers = [
 ];
 
 const eg2 = `two1nine
-eightwothree
+eight
 abcone2threexyz
 xtwone3four
 4nineeightseven2
@@ -54,17 +55,22 @@ zoneight234
 const parseRecoverValue = document => document
     .split('\n')
     .reduce((sum, line) => {
-        let parsedLine = line;
+        const numbers = line
+            .split('')
+            .reduce((sum, letter) => {
 
-        while (fullNumbers.some(number => parsedLine.includes(number))) {
-            fullNumbers.forEach((number, index) => {
-                parsedLine = parsedLine.replace(number, index + 1);
-            });
-        }
+                let currentLine = sum + letter;
 
-        console.log(parsedLine);
+                if (fullNumbers.some(number => currentLine.includes(number))) {
+                    fullNumbers.forEach((number, index) => {
+                        currentLine = currentLine
+                            .replace(number, `${number[0]}${index + 1}${number.slice(-1)}`);
+                    });
 
-        const numbers = parsedLine
+                }
+
+                return currentLine;
+            }, '')
             .split('')
             .filter(letter => !alphabet.includes(letter));
 
@@ -75,12 +81,13 @@ const parseRecoverValue = document => document
     }, 0);
 
 console.log('2) eg: ', parseRecoverValue(eg2));
-// console.log('2) input: ', parseRecoverValue(input));
+console.log('2) input: ', parseRecoverValue(input));
 
 /*
 Wrong guesses:
+    2) 54538 too high
 
 Correct:
     1) 56049
-    2) 
+    2) 54530
 */
