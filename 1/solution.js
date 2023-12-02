@@ -27,6 +27,7 @@ console.log('1) input: ', recoverValue(input));
     Hidden rules:
         xxxx3xxxx = 33
         eightwo = 82
+        no zeros?
 */
 
 const fullNumbers = [
@@ -42,7 +43,7 @@ const fullNumbers = [
 ];
 
 const eg2 = `two1nine
-eight
+eightwothree
 abcone2threexyz
 xtwone3four
 4nineeightseven2
@@ -78,8 +79,27 @@ const parseRecoverValue = document => document
         return sum;
     }, 0);
 
+
+const numbers = '123456789';
+
+// search
+
+const optimizeParse = document => document
+    .split('\n')
+    // .map(line => +`${
+    .map(line => `${
+        // normal, two4four
+        line
+    } ${
+        // reversed  ruof4owt
+        line.split('').reduce((sum, char) => char + sum, '')
+    }`)
+
+
 console.log('2) eg: ', parseRecoverValue(eg2));
 console.log('2) input: ', parseRecoverValue(input));
+
+console.log('2) eg: ', optimizeParse(eg2));
 
 /*
 Wrong guesses:
