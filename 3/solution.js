@@ -20,6 +20,22 @@ const placeholder = input => input
 
             const lineNumbers = line
                 .split('.')
+                .flatMap(i => i.split('!'))
+                .flatMap(i => i.split('@'))
+                .flatMap(i => i.split('£'))
+                .flatMap(i => i.split('$'))
+                .flatMap(i => i.split('%'))
+                .flatMap(i => i.split('^'))
+                .flatMap(i => i.split('&'))
+                .flatMap(i => i.split('*'))
+                .flatMap(i => i.split('('))
+                .flatMap(i => i.split(')'))
+                .flatMap(i => i.split('_'))
+                .flatMap(i => i.split('+'))
+                .flatMap(i => i.split('/'))
+                .flatMap(i => i.split('='))
+                .flatMap(i => i.split('-'))
+                .flatMap(i => i.split('#'))
                 .reduce((sum, number) => {
                     if (!number || !+number) return sum;
 
@@ -27,7 +43,13 @@ const placeholder = input => input
                     const prev = currentLine.substring(0, i)
                     const next = currentLine.substring(i + number.length, line.length)
 
+                    // console.log();
+                    // console.log(currentLine);
+
                     currentLine = `${prev}${'.'.repeat(number.length)}${next}`
+
+                    // console.log(currentLine, '\n');
+
 
                     const preffix = '.'.repeat(prev.length)
                     const suffix = '.'.repeat(next.length)
@@ -93,8 +115,10 @@ console.log('1) input: ', placeholder(input));
 
 /*
 Wrong guesses:
+    1) 437637 too low
+    1) 4402283 too high
 
 Correct:
-    1) 
+    1) 512794
     2) 
 */
