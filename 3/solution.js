@@ -6,11 +6,11 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 const alphabet = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const numbers = '0123456789'
-const symbols = '!@£$%^&*()_+/=-'
+const symbols = '!@£$%^&*()_+/=-#'
 
 const placeholder = input => input
         .split('\n')
-        .reduce(([sum, number], line, index, array) => {
+        .reduce((sum, line, index, array) => {
 
             const prevLine = array[index - 1];
             const nextLine = array[index + 1];
@@ -20,36 +20,46 @@ const placeholder = input => input
 
             const lineNumbers = line
                 .split('.')
-                .reduce((sum, i) => i ? [...sum, i] : sum, [])
+                .reduce((sum, number) => {
+                    if (!number || !+number) return sum;
 
-            // const isPart = lineNumbers
-                // .map(yarg => yarg
-            const isPart = line
+                    const i = currentLine.search(number)
+                    const prev = currentLine.substring(0, i)
+                    const next = currentLine.substring(i + number.length, line.length)
+
+                    currentLine = `${prev}${'.'.repeat(number.length)}${next}`
+
+                    const preffix = '.'.repeat(prev.length)
+                    const suffix = '.'.repeat(next.length)
+
+                    return [...sum, `${preffix}${number}${suffix}`];
+                }, [])
+
+            const validNumbers = lineNumbers.map(number => ([
+                +number.split('.').reduce((sum, i) => i ? [...sum, i] : sum, []),
+                number
                 .split('')
-                .reduce((isPart, char, i, chars) => {
-
-//                     console.log(offset);
-//
-//                     const i = currI + offset;
-
+                .reduce((isPart, char, i) => {
                     if (isPart) return isPart;
                     if (!numbers.includes(char)) return isPart;
 
                     if (prevLine) {
                         if (
-                        symbols.includes(prevLine[i - 1]) ||
-                        symbols.includes(prevLine[i]) ||
-                        symbols.includes(prevLine[i + 1])
+                            symbols.includes(prevLine[i - 1]) ||
+                            symbols.includes(prevLine[i]) ||
+                            symbols.includes(prevLine[i + 1])
                         ) return true;
                     }
 
                     if (nextLine) {
                         if (
-                        symbols.includes(nextLine[i - 1]) ||
-                        symbols.includes(nextLine[i]) ||
-                        symbols.includes(nextLine[i + 1])
+                            symbols.includes(nextLine[i - 1]) ||
+                            symbols.includes(nextLine[i]) ||
+                            symbols.includes(nextLine[i + 1])
                         ) return true;
                     }
+
+                    const chars = line.split('')
 
                     const prevChar = chars[i - 1];
                     const nextChar = chars[i + 1];
@@ -60,18 +70,19 @@ const placeholder = input => input
                     return false
 
                 }, false)
-            // );
+            ]));
 
+            const lineSum = validNumbers.reduce((sum, [number, isValid]) => isValid ? sum + number : sum , 0)
 
-            console.log(lineNumbers, isPart);
+            // console.log(validNumbers, lineSum, sum);
 
-            return [sum, number];
+            return sum + lineSum;
 
-        }, [0, []])
+        }, 0)
 
 
 console.log('1) eg: ', placeholder(eg));
-// console.log('1) input: ', placeholder(input));
+console.log('1) input: ', placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
 
