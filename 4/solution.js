@@ -24,12 +24,8 @@ const getPoints = cards => cards
                 return 1;
             }
 
-            // scores.includes(number) ? points ? 1 : points * 2 : points
-
             return points
         }, 0)
-
-        // console.log(scores, points);
 
         return sum + points
     }, 0);
@@ -39,12 +35,10 @@ console.log('1) input: ', getPoints(input));
 
 // Part 2 ---------------------------------------------------------------------
 /*
-    Recursion!
-
-    ok I think a lot of refactoring will be needed
+    +/- 2 hours :'-(
+    Optimization skills: abysmal
 */
 
-// returns [scores, numbers];
 const parseCard = card => card
     .split(':')[1]
     .split('|')
@@ -93,5 +87,5 @@ Wrong guesses:
 
 Correct:
     1) 22193
-    2) 
+    2) 5625994
 */
