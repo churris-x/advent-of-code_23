@@ -44,24 +44,29 @@ console.log('1) input: ', getPoints(input));
     ok I think a lot of refactoring will be needed
 */
 
+// returns [scores, numbers];
+const parseCard = card => card
+    .split(':')[1]
+    .split('|')
+    .map(numbers => numbers
+        .split(' ')
+        .filter(i => !!i)
+    );
+
+const countPoints = (scores, numbers) => numbers
+    .reduce((points, number) =>
+        scores.includes(number) ? points + 1 : points
+    , 0)
+
 const totalCards = [];
 
 const placeholder = lines => lines
     .split('\n')
-    .map(card => card
-        .split(':')[1]
-        .split('|')
-        .map(numbers => numbers
-            .split(' ')
-            .filter(i => !!i)
-        )
-    )
+    .map(card => parseCard(card))
     .reduce((sum, card, index, cards) => {
         const [scores, numbers] = card;
 
-        const points = numbers.reduce((points, number) =>
-            scores.includes(number) ? points + 1 : points
-        , 0)
+        const points = countPoints(scores, numbers);
 
         const nextCards = cards.slice(index + 1, points + 1);
 
