@@ -52,7 +52,7 @@ const parseCard = card => card
         numbers
             .split(' ')
             .filter(i => !!i)
-    );
+    )
 
 const countPoints = (scores, numbers) => numbers
     .reduce((points, number) =>
@@ -60,34 +60,27 @@ const countPoints = (scores, numbers) => numbers
     , 0);
 
 const countCards = input => {
-    const initialCards = input.split('\n').map((card, i) => [i + 1,  ...parseCard(card)]);
-    const cards = input.split('\n').map((card, i) => [i + 1,  ...parseCard(card)]);
+    const cardPoints = input
+        .split('\n')
+        .map((card, i) => parseCard(card))
+        .map(([scores, numbers]) => countPoints(scores, numbers))
+
+
+    const cards = cardPoints.map((points, index) => ([ index, points]));
+
+
+    while (cards.length) {
+
+    }
+
     const totalCards = [];
 
 
-    let i = 0;
 
-    while (cards.length > 0) {
-
-        i++
-
-        const [id, scores, numbers] = cards.shift();
-
-        totalCards.push([id, scores, numbers]);
-
-        const points = countPoints(scores, numbers);
-
-        const nextCards = initialCards.slice(id, id + points);
+cards.forEach(i => console.log(i))
+    // return cards;
 
 
-        // console.log(cards.length);
-
-        nextCards.forEach(card => cards.push(card));
-
-        console.log({points, totalCards: totalCards.length});
-    }
-
-    return totalCards.length;
 };
 
 console.log('2) eg: ', countCards(eg));
