@@ -63,24 +63,24 @@ const countCards = input => {
     const cardPoints = input
         .split('\n')
         .map((card, i) => parseCard(card))
-        .map(([scores, numbers]) => countPoints(scores, numbers))
+        .map(([scores, numbers], index) => [index, countPoints(scores, numbers)])
 
+    const cards = [...cardPoints];
 
-    const cards = cardPoints.map((points, index) => ([ index, points]));
+    let total = 0;
 
+    while (cards.length > 0) {
 
-    while (cards.length) {
+        total++;
 
+        const [index, points] = cards.shift();
+
+        cards.push(...cardPoints.slice(index + 1, index + 1 + points))
+
+        if (total % 100000 === 0) console.log(total);
     }
 
-    const totalCards = [];
-
-
-
-cards.forEach(i => console.log(i))
-    // return cards;
-
-
+    return total;
 };
 
 console.log('2) eg: ', countCards(eg));
@@ -89,6 +89,7 @@ console.log('2) input: ', countCards(input));
 /*
 Wrong guesses:
     2) 108929 too low
+    2) 339658 too low
 
 Correct:
     1) 22193
