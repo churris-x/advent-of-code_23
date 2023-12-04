@@ -29,7 +29,7 @@ const getPoints = cards => cards
             return points
         }, 0)
 
-        console.log(scores, points);
+        // console.log(scores, points);
 
         return sum + points
     }, 0);
@@ -38,10 +38,50 @@ console.log('1) eg: ', getPoints(eg));
 console.log('1) input: ', getPoints(input));
 
 // Part 2 ---------------------------------------------------------------------
+/*
+    Recursion!
 
-const placeholder = () => {};
+    ok I think a lot of refactoring will be needed
+*/
+
+const totalCards = [];
+
+const placeholder = lines => lines
+    .split('\n')
+    .map(card => card
+        .split(':')[1]
+        .split('|')
+        .map(numbers => numbers
+            .split(' ')
+            .filter(i => !!i)
+        )
+    )
+    .reduce((sum, card, index, cards) => {
+        const [scores, numbers] = card;
+
+        const points = numbers.reduce((points, number) =>
+            scores.includes(number) ? points + 1 : points
+        , 0)
+
+        const nextCards = cards.slice(index + 1, points + 1);
+
+        totalCards.push([card, index + 1])
+        nextCards.forEach((card, i) => totalCards.push([card, index + 1]))
+
+
+        if (index === 0){
+            console.log(
+                // nextCards,
+                points,
+            );
+        }
+
+        return sum + points
+    }, 0);
+
 
 console.log('2) eg: ', placeholder(eg));
+console.log(totalCards);
 // console.log('2) input: ', placeholder(input));
 
 /*
