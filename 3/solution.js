@@ -204,8 +204,6 @@ const findGears = input => input
     .sort((a, b) => a[1].localeCompare(b[1]))
     .reduce(([sum, product], [number, id]) => {
 
-        // console.log(number);
-
         if (idSum[id] !== 2) return [sum, 1];
         if (product !== 1) return [sum + (product * number), 1];
 
