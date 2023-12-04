@@ -4,7 +4,7 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 
-const placeholder = cards => cards
+const getPoints = cards => cards
     .split('\n')
     .map(card => card
         .split(':')[1]
@@ -34,14 +34,14 @@ const placeholder = cards => cards
         return sum + points
     }, 0);
 
-console.log('1) eg: ', placeholder(eg));
-console.log('1) input: ', placeholder(input));
+console.log('1) eg: ', getPoints(eg));
+console.log('1) input: ', getPoints(input));
 
 // Part 2 ---------------------------------------------------------------------
 
-// const placeholder = () => {};
+const placeholder = () => {};
 
-// console.log('2) eg: ', placeholder(eg));
+console.log('2) eg: ', placeholder(eg));
 // console.log('2) input: ', placeholder(input));
 
 /*
