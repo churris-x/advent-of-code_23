@@ -48,49 +48,54 @@ console.log('1) input: ', getPoints(input));
 const parseCard = card => card
     .split(':')[1]
     .split('|')
-    .map(numbers => numbers
-        .split(' ')
-        .filter(i => !!i)
+    .map((numbers, index) =>
+        numbers
+            .split(' ')
+            .filter(i => !!i)
     );
 
 const countPoints = (scores, numbers) => numbers
     .reduce((points, number) =>
         scores.includes(number) ? points + 1 : points
-    , 0)
+    , 0);
 
-const totalCards = [];
+const countCards = input => {
+    const initialCards = input.split('\n').map((card, i) => [i + 1,  ...parseCard(card)]);
+    const cards = input.split('\n').map((card, i) => [i + 1,  ...parseCard(card)]);
+    const totalCards = [];
 
-const placeholder = lines => lines
-    .split('\n')
-    .map(card => parseCard(card))
-    .reduce((sum, card, index, cards) => {
-        const [scores, numbers] = card;
+
+    let i = 0;
+
+    while (cards.length > 0) {
+
+        i++
+
+        const [id, scores, numbers] = cards.shift();
+
+        totalCards.push([id, scores, numbers]);
 
         const points = countPoints(scores, numbers);
 
-        const nextCards = cards.slice(index + 1, points + 1);
-
-        totalCards.push([card, index + 1])
-        nextCards.forEach((card, i) => totalCards.push([card, index + 1]))
+        const nextCards = initialCards.slice(id, id + points);
 
 
-        if (index === 0){
-            console.log(
-                // nextCards,
-                points,
-            );
-        }
+        // console.log(cards.length);
 
-        return sum + points
-    }, 0);
+        nextCards.forEach(card => cards.push(card));
 
+        console.log({points, totalCards: totalCards.length});
+    }
 
-console.log('2) eg: ', placeholder(eg));
-console.log(totalCards);
-// console.log('2) input: ', placeholder(input));
+    return totalCards.length;
+};
+
+console.log('2) eg: ', countCards(eg));
+console.log('2) input: ', countCards(input));
 
 /*
 Wrong guesses:
+    2) 108929 too low
 
 Correct:
     1) 22193
