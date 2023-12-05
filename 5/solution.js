@@ -3,10 +3,58 @@ const eg = fs.readFileSync(require.resolve('./eg.txt')).toString().slice(0, -1);
 const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0, -1);
 
 // Part 1 ---------------------------------------------------------------------
+/*
+the difference between the range starts is helpful
 
-const placeholder = () => {};
 
-// console.log('1) eg: ', placeholder(eg));
+n  + ( e -  s)
+5  + (13 -  4) = 14
+14 + ( 4 - 13) = 5
+
+s  e r
+4 13 5
+-------
+0  1  2  3  4  5  6  7  8  9 10 11 12 13
+0  1  2  3 13 14 15 16 17 18 10 11 12 13
+
+13 4 5
+------
+0 .. 11 12 13 14 15 16 17 18 19 20
+0 .. 11 12  4  5  6  7  8 18 19 20
+
+*/
+
+
+const translate = (seed, [start, end, range]) => {
+    if (seed >= start && <= start + range) return seed + end - start;
+
+    return seed;
+}
+
+const placeholder = file => {
+    const seeds = file
+        .split('\n\n')[0]
+        .split(' ')
+        .slice(1);
+
+    const maps = file
+        .split('\n\n')
+        .slice(1)
+        .map(i => i
+            .split('\n')
+            .slice(1)
+            .map(i => i.split(' '))
+        );
+
+
+    const results = seeds.reduce((value, seed) => {
+
+    })
+
+    return [seeds, maps];
+};
+
+console.log('1) eg: ', placeholder(eg));
 // console.log('1) input: ', placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
