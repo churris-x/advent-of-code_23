@@ -4,16 +4,18 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 
-const getPoints = cards => cards
-    .split('\n')
-    .map(card => card
-        .split(':')[1]
-        .split('|')
-        .map(numbers => numbers
+const parseCard = card => card
+    .split(':')[1]
+    .split('|')
+    .map((numbers, index) =>
+        numbers
             .split(' ')
             .filter(i => !!i)
-        )
     )
+
+const getPoints = cards => cards
+    .split('\n')
+    .map(card => parseCard(card))
     .reduce((sum, card) => {
         const [scores, numbers] = card;
 
@@ -39,15 +41,6 @@ console.log('1) input: ', getPoints(input));
     Optimization skills: abysmal
 */
 
-const parseCard = card => card
-    .split(':')[1]
-    .split('|')
-    .map((numbers, index) =>
-        numbers
-            .split(' ')
-            .filter(i => !!i)
-    )
-
 const countPoints = (scores, numbers) => numbers
     .reduce((points, number) =>
         scores.includes(number) ? points + 1 : points
@@ -67,11 +60,14 @@ const countCards = input => {
 
         total++;
 
+        if (total % 100000 === 0) console.log(`${total * 100/5000000} %`);
+
         const [index, points] = cards.shift();
+
+        if (!points) continue;
 
         cards.push(...cardPoints.slice(index + 1, index + 1 + points))
 
-        if (total % 100000 === 0) console.log(total);
     }
 
     return total;
