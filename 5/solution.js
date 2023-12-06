@@ -25,8 +25,10 @@ s  e r
 */
 
 
-const translate = (seed, [start, end, range]) => {
-    if (seed >= start && seed <= start + range) return seed + end - start;
+const translate = (seed, [end, start, range]) => {
+    if (seed >= start && seed <= start + range) {
+        return seed + end - start;
+    }
 
     return seed;
 }
@@ -45,28 +47,37 @@ const placeholder = file => {
             .split('\n')
             .slice(1)
             .map(i => i.split(' ').map(i => +i))
-        );
+        )
 
     const results = seeds.map(seed => {
 
         const location = maps.reduce((value, filters, index) => {
 
-            console.log(index, value, filter);
+            let newValue = value;
 
-            return translate(value, filter);
+            filters.forEach(filter => {
+                if (newValue !== value) return;
 
+                const fValue = translate(value, filter);
+
+                if (fValue === value) return;
+                newValue = fValue;
+            })
+
+
+            return newValue;
         }, seed);
-
 
         return location;
 
     })
+    .sort((a, b) => a - b)[0]
 
     return results;
 };
 
 console.log('1) eg: ', placeholder(eg));
-// console.log('1) input: ', placeholder(input));
+console.log('1) input: ', placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
 
