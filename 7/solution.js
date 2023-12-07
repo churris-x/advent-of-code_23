@@ -32,7 +32,9 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 */
 
-const cards = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
+const cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+
+const parseCard = card => card.split('').map(i => cards.indexOf(i)).join('');
 
 const getWinnings = bets => bets
     .split('\n')
@@ -42,30 +44,28 @@ const getWinnings = bets => bets
         const types = Object.entries(cards.split('').reduce((dictionary, card) => ({
             ...dictionary,
             [card]: (dictionary[card] ?? 0) + 1}
-        ), {}))
+        ), {}));
 
+        if (types.length === 5) return [cards, bid, 0];                     // high card
 
-        // if ( types.find(5) ) return five of a kind
-        // if ( types.find(4) ) return four of a kind
+        if (types.length === 1) return [cards, bid, 6];                     // five of a kind
 
-        // filter
-        // if ( types.find(3) && anotherTypes.find(2)) return full house
-        // if ( types.find(3)) return three of a kind house
+        if (types.find(([card, sum]) => sum === 4)) return [cards, bid, 5]; // four of a kind
 
-        // filter
-        // if ( types.find(2) && anotherTypes.find(2) ) return two pair
-        // if ( types.find(2) ) reutrn one pair
+        if (types.length <= 2) return [cards, bid, 4];                      // full house
 
-        // return high card
+        if (types.find(([card, sum]) => sum === 3)) return [cards, bid, 3]; // three of a kind
 
-        return [cards, bid, types]
+        if (types.length <= 3) return [cards, bid, 2];                      // two pair
+
+        return [cards, bid, 1];                                             // one pair
+
     })  // calc type
-//     .sort((a, b) => {
-//         if (b[2] - a[2] !== 0) return b[2] - a[2];  // sort by highest type
-//
-//         // order same type cards somehow
-//         return b[2] - a[2]
-//     })
+    .sort((a, b) => {
+        if (b[2] - a[2] !== 0) return b[2] - a[2];  // sort by highest type
+
+        return parseCard(b[0]) - parseCard(a[0]);   // sort by best cards
+    })
 //     .reduce((sum, [hand, bid, type], rank) => {
 //         // calc winnings
 //     }, 0)
