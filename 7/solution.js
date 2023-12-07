@@ -66,12 +66,12 @@ const getWinnings = bets => bets
 
         return parseCard(b[0]) - parseCard(a[0]);   // sort by best cards
     })
-//     .reduce((sum, [hand, bid, type], rank) => {
-//         // calc winnings
-//     }, 0)
+    .reduce((sum, [hand, bid, type], rank) => {
+        return sum + (bid * (rank + 1));
+    }, 0)
 
 console.log('1) eg: ', getWinnings(eg));
-// console.log('1) input: ', placeholder(input));
+console.log('1) input: ', getWinnings(input));
 
 // Part 2 ---------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ console.log('1) eg: ', getWinnings(eg));
 
 /*
 Wrong guesses:
-
+    1) 249530956 too low
 Correct:
     1) 
     2) 
