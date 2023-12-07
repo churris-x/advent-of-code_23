@@ -34,7 +34,7 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 const cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 
-const parseCard = card => card.split('').map(i => cards.indexOf(i)).join('');
+const parseCard = card => Number.parseInt(`0x${card.split('').map(i => cards.indexOf(i).toString(16)).join('')}`);
 
 const getWinnings = bets => bets
     .split('\n')
@@ -60,11 +60,11 @@ const getWinnings = bets => bets
 
         return [cards, bid, 1];                                             // one pair
 
-    })  // calc type
+    })
     .sort((a, b) => {
-        if (b[2] - a[2] !== 0) return b[2] - a[2];  // sort by highest type
+        if (a[2] - b[2] !== 0) return a[2] - b[2];  // sort by highest type
 
-        return parseCard(b[0]) - parseCard(a[0]);   // sort by best cards
+        return parseCard(a[0]) - parseCard(b[0]); //  sort by best cards
     })
     .reduce((sum, [hand, bid, type], rank) => {
         return sum + (bid * (rank + 1));
@@ -83,7 +83,9 @@ console.log('1) input: ', getWinnings(input));
 /*
 Wrong guesses:
     1) 249530956 too low
+    1) 251469544 too low
+
 Correct:
-    1) 
+    1) 251545216
     2) 
 */
