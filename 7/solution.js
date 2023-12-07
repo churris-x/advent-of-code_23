@@ -30,9 +30,11 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
         xAAAy
         xyAAA
 
+    check what each type can be with the joker
+
 */
 
-const cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+const cards = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A'];
 
 const parseCard = card => Number.parseInt(`0x${card.split('').map(i => cards.indexOf(i).toString(16)).join('')}`);
 
@@ -75,17 +77,67 @@ console.log('1) input: ', getWinnings(input));
 
 // Part 2 ---------------------------------------------------------------------
 
-// const placeholder = () => {};
+const getWinningsJoker = bets => bets
+    .split('\n')
+    .map(bet => {
+        const [cards, bid] = bet.split(' ');
 
-// console.log('2) eg: ', placeholder(eg));
-// console.log('2) input: ', placeholder(input));
+        const types = Object.entries(cards.split('').reduce((dictionary, card) => ({
+            ...dictionary,
+            [card]: (dictionary[card] ?? 0) + 1}
+        ), {}));
+
+        // five of a kind
+        if (types.length === 1) return [cards, bid, 6];
+
+        const hasJoker = types.find(([card, sum]) => card === 'J')?.[1];
+
+        if (types.length === 5) {
+            if (hasJoker) return [cards, bid, 1] // One pair
+
+            return [cards, bid, 0];  // High card
+        }
+        if (types.find(([card, sum]) => sum === 4)) {
+            if (hasJoker) return [cards, bid, 6] // Five of a kind
+            return [cards, bid, 5];  // Four of a kind
+        }
+        if (types.length <= 2) {
+            if (hasJoker) return [cards, bid, 6] // Five of a kind
+            return [cards, bid, 4];  // Full house
+        }
+        if (types.find(([card, sum]) => sum === 3)) {
+            if (hasJoker) return [cards, bid, 5] // Four of a kind
+            return [cards, bid, 3];  // Three of a kind
+        }
+        if (types.length <= 3) {
+            if (hasJoker === 2) return [cards, bid, 5] // Four of a kind
+            if (hasJoker) return [cards, bid, 4];  // Full house
+            return [cards, bid, 2];  // Two pair
+        }
+
+        if (hasJoker) return [cards, bid, 3] // Three of a kind
+        return [cards, bid, 1];  // one pair
+
+    })
+    .sort((a, b) => {
+        if (a[2] - b[2] !== 0) return a[2] - b[2];  // sort by highest type
+
+        return parseCard(a[0]) - parseCard(b[0]); //  sort by best cards
+    })
+    .reduce((sum, [hand, bid, type], rank) => {
+        return sum + (bid * (rank + 1));
+    }, 0)
+
+console.log('2) eg: ', getWinningsJoker(eg));
+console.log('2) input: ', getWinningsJoker(input));
 
 /*
 Wrong guesses:
     1) 249530956 too low
     1) 251469544 too low
+    2) 250339840 too low
 
 Correct:
     1) 251545216
-    2) 
+    2) 250384185
 */
