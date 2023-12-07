@@ -27,9 +27,11 @@ const types = [
     'AAAAA',      // Five of a kind
 ];
 
-const placeholder = bets => bets
-    .slice('\n')
-    .map(i => i.split(' '))  // calc type
+const getWinnings = bets => bets
+    .split('\n')
+    .map(i => {
+        return i.split(' ')
+    })  // calc type
     .sort((a, b) => {
         if (b[2] - a[2] !== 0) return b[2] - a[2];  // sort by highest type
 
@@ -40,7 +42,7 @@ const placeholder = bets => bets
         // calc winnings
     }, 0)
 
-console.log('1) eg: ', placeholder(eg));
+console.log('1) eg: ', getWinnings(eg));
 // console.log('1) input: ', placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
