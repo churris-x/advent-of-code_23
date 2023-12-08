@@ -12,6 +12,9 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
     node['L'] = 'BBB';
 
+    WHAT THE FUCK DO YOU MEAN IT"S NOT THE FIRST ITEM?
+    FOR REAL?
+
 */
 
 
@@ -32,10 +35,10 @@ const placeholder = input => {
 
     let index = 0;
 
-    console.log(nodes);
-
     while (currentNode !== lastNode) {
         const currentStep = steps[index % steps.length];
+
+        console.log(currentStep, currentNode, nodes[currentNode][currentStep]);
 
         currentNode = moveNode(currentNode, currentStep);
 
@@ -58,7 +61,7 @@ console.log('1) input: ', placeholder(input));
 
 /*
 Wrong guesses:
-    1) 236
+    1) 236 ????????? WHY ARE YOU SO SHIT
 Correct:
     1) 
     2) 
