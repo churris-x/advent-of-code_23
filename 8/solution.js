@@ -4,21 +4,10 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 /*
-    I will need to create some memoization here
-
-    const result = {
-        'JSON stringified params': result
-    }
-
     node['L'] = 'BBB';
-
-    WHAT THE FUCK DO YOU MEAN IT"S NOT THE FIRST ITEM?
-    FOR REAL?
-
 */
 
-
-const placeholder = input => {
+const stepsToNode = input => {
     const [movement, rawNodes] = input.split('\n\n').map(i => i.split('\n'))
 
     const steps = movement[0] //.split('');
@@ -26,12 +15,15 @@ const placeholder = input => {
         .map(i => i.replaceAll(/\(|\)|\,/gi, '').split(' '))
         .reduce((nodes, node) => ({...nodes, [node[0]]: {L: node[2], R: node[3] }}), {})
 
-    // const moveNode = (node, step) => nodes[node]?.[step] ?? node;
     const moveNode = (node, step) => nodes[node][step];
     const cache = {};
 
-    let currentNode = rawNodes[0].slice(0, 3);
-    const lastNode = rawNodes.slice(-1)[0].slice(0, 3)
+    // let currentNode = rawNodes[0].slice(0, 3);
+    // const lastNode = rawNodes.slice(-1)[0].slice(0, 3)
+
+    // this feels stupid haha
+    let currentNode = 'AAA';
+    const lastNode = 'ZZZ';
 
     let index = 0;
 
@@ -45,12 +37,11 @@ const placeholder = input => {
         index++;
     }
 
-
     return [currentNode, index];
 };
 
-console.log('1) eg: ', placeholder(eg));
-console.log('1) input: ', placeholder(input));
+console.log('1) eg: ', stepsToNode(eg));
+console.log('1) input: ', stepsToNode(input));
 
 // Part 2 ---------------------------------------------------------------------
 
@@ -61,8 +52,8 @@ console.log('1) input: ', placeholder(input));
 
 /*
 Wrong guesses:
-    1) 236 ????????? WHY ARE YOU SO SHIT
+    1) 236
 Correct:
-    1) 
+    1) 12361
     2) 
 */
