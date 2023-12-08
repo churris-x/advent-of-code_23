@@ -22,7 +22,8 @@ Solutions to each day, in the following format:
 - `$ npm run delete <days>` or input which days you want to delete, confirm with <kbd>y</kbd>
 
 ## Todo:
-- [ ] Parse and download the task exercise as well
+- [ ] Parse and download the task exercise as well -> [This extension](https://github.com/deathau/markdownload) works particularly well
+- [ ] Add functionality for multiple examples? Array?
 
 ## FAQ
 - How to get your Auth token
