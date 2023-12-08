@@ -34,9 +34,13 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 */
 
+//              0    1    2    4    5    6    7    8    9    A    B    C    D
 const cards = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A'];
 
-const parseCard = card => Number.parseInt(`0x${card.split('').map(i => cards.indexOf(i).toString(16)).join('')}`);
+// convert each card to hex, then parse the full number
+const parseHand = hand => Number.parseInt(`0x${
+    hand.split('').map(card => cards.indexOf(card).toString(16)).join('')
+}`);
 
 const getWinnings = bets => bets
     .split('\n')
@@ -66,7 +70,7 @@ const getWinnings = bets => bets
     .sort((a, b) => {
         if (a[2] - b[2] !== 0) return a[2] - b[2];  // sort by highest type
 
-        return parseCard(a[0]) - parseCard(b[0]); //  sort by best cards
+        return parseHand(a[0]) - parseHand(b[0]); //  sort by best cards
     })
     .reduce((sum, [hand, bid, type], rank) => {
         return sum + (bid * (rank + 1));
@@ -90,11 +94,10 @@ const getWinningsJoker = bets => bets
         // five of a kind
         if (types.length === 1) return [cards, bid, 6];
 
-        const hasJoker = types.find(([card, sum]) => card === 'J')?.[1];
+        const hasJoker = types.find(([card, sum]) => card === 'J')?.[1] ?? 0;
 
         if (types.length === 5) {
             if (hasJoker) return [cards, bid, 1] // One pair
-
             return [cards, bid, 0];  // High card
         }
         if (types.find(([card, sum]) => sum === 4)) {
@@ -122,7 +125,7 @@ const getWinningsJoker = bets => bets
     .sort((a, b) => {
         if (a[2] - b[2] !== 0) return a[2] - b[2];  // sort by highest type
 
-        return parseCard(a[0]) - parseCard(b[0]); //  sort by best cards
+        return parseHand(a[0]) - parseHand(b[0]); //  sort by best cards
     })
     .reduce((sum, [hand, bid, type], rank) => {
         return sum + (bid * (rank + 1));
@@ -138,6 +141,6 @@ Wrong guesses:
     2) 250339840 too low
 
 Correct:
-    1) 251545216
+    1) 251545216  // to get this value, change Joker position on cards array
     2) 250384185
 */
