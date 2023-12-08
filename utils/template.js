@@ -4,9 +4,9 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 
-const placeholder = () => {};
+const placeholder = input => input;
 
-// console.log('1) eg: ', placeholder(eg));
+console.log('1) eg: ', placeholder(eg));
 // console.log('1) input: ', placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
