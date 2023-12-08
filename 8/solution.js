@@ -76,7 +76,7 @@ const placeholder = input => {
     const lcm = (a, b) => a / gcd(a, b) * b;
 
     const nodeSteps = Object.keys(nodes)
-        .reduce((array, node) => node[2] === 'A' ? [...array, findSteps(node)] : array, [])
+        .reduce((array, node) => node[2] === 'A' ? [...array, findSteps(node)[2]] : array, [])
         .reduce(lcm, 1)
 
     return nodeSteps;
