@@ -3,6 +3,10 @@ const eg = fs.readFileSync(require.resolve('./eg.txt')).toString().slice(0, -1);
 const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0, -1);
 
 // Part 1 ---------------------------------------------------------------------
+/*
+    calculate the distance
+
+*/
 
 const getWinnings = input => {
     const [times, distances] = input
@@ -15,13 +19,18 @@ const getWinnings = input => {
     const races = times.map((item, index) => [item, distances[index]]);
 
 
-    const waysToWin = races.reduce(() => {
+    const waysToWin = races.reduce((sum, race) => {
 
+        const [time, distance] =;
+
+        while ()
+
+        return sum;
     }, 0);
 
-    console.log(times, distances, races);
+    console.log(races, waysToWin);
 
-
+    return waysToWin;
 
 }
 
