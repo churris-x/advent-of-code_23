@@ -4,9 +4,28 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 
-const placeholder = input => input;
+const getWinnings = input => {
+    const [times, distances] = input
+        .split('\n')
+        .map(i => i
+            .split(' ')
+            .reduce((array, item) => item ? [...array, item] : array , [])
+        );
 
-console.log('1) eg: ', placeholder(eg));
+    const races = times.map((item, index) => [item, distances[index]]);
+
+
+    const waysToWin = races.reduce(() => {
+
+    }, 0);
+
+    console.log(times, distances, races);
+
+
+
+}
+
+console.log('1) eg: ', getWinnings(eg));
 // console.log('1) input: ', placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
