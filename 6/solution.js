@@ -46,6 +46,9 @@ console.log('1) eg: ', getWinnings(eg));
 
 /*
 Wrong guesses:
+    wrongly inputed these from another puzzle, you are an idiot
+    1) 1757008022 too high
+    2) 1757008019 too high
 
 Correct:
     1) 
