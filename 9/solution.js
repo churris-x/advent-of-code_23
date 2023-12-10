@@ -13,37 +13,43 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 // recursive could be more efficient, will brute force it for now
 // const getDiff = (array, prev, next) => next - prev === 0 ? next : getDiff(prev)
 
-const getDiff = array => array.reduce((diffArray, item, index) =>
-        +array[index + 1] ?
-            // [...diffArray, Math.abs(Math.abs(array[index + 1]) - Math.abs(item))]
-            // [...diffArray, Math.abs(array[index + 1]) - Math.abs(item)]
-            [...diffArray, array[index + 1] - item]
-        : diffArray
-    , [])
+const getDiff = array =>
+    // array.reduce((diffArray, item, index) =>
+    //     +array[index + 1] ?
+    //         // [...diffArray, Math.abs(Math.abs(array[index + 1]) - Math.abs(item))]
+    //         // [...diffArray, Math.abs(array[index + 1]) - Math.abs(item)]
+    //         [...diffArray, array[index + 1] - item]
+    //     : diffArray.length ? diffArray : [0]
+    // , []);
+    array.map((item, index) => item - array[index - 1]).slice(1)
+
 
 const sumNextNumber = input => input
     .split('\n')
     .map(i => i.split(' ').map(i => +i))
-    .reduce((sum, sequence) => {
+    .reduce((sum, sequence, debug) => {
 
         const steps = [sequence, getDiff(sequence)]
 
         while (steps[steps.length - 1].slice(-1)[0] !== 0) {
             steps.push(getDiff(steps[steps.length - 1]));
 
-            console.log('stuck?', steps.map( i => i.join('  ')));
+            if (debug === 137) console.log('stuck?', steps.map( i => i.join('  ')));
         }
 
         const nextNumber = steps.reduce((sum, numbers) => sum + numbers[numbers.length - 1], 0);
 
-        console.log(steps, nextNumber);
+        console.log(nextNumber);
+
+        // console.log(steps, nextNumber);
 
         return sum + nextNumber
+        // return [...sum, nextNumber]
     }, 0)
 
 
 console.log('1) eg: ', sumNextNumber(eg));
-// console.log('1) input: ', sumNextNumber(input));
+console.log('1) input: ', sumNextNumber(input));
 
 // Part 2 ---------------------------------------------------------------------
 
@@ -54,8 +60,8 @@ console.log('1) eg: ', sumNextNumber(eg));
 
 /*
 Wrong guesses:
-
+    1) 1757008022 too high
 Correct:
-    1) 
+    1) 1757008019
     2) 
 */
