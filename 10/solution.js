@@ -35,6 +35,7 @@ const [eg0, eg1] = eg.split('\n\n');
 const inputSymbols = {'|': 0, '-': 0, 'L': 0, 'J': 0, 7: 0, 'F': 0};
 
 const placeholder = input => input
+    .replaceAll('.', '·')
     .replaceAll('|', '│')
     .replaceAll('-', '─')
     .replaceAll('L', '└')
@@ -47,8 +48,9 @@ console.log(placeholder(eg0));
 console.log('\n');
 console.log('1) eg1: ');
 console.log(placeholder(eg1));
-console.log('\n');
-console.log('1) input: ');
+
+// console.log('\n');
+// console.log('1) input: ');
 // console.log(placeholder(input));
 
 // Part 2 ---------------------------------------------------------------------
