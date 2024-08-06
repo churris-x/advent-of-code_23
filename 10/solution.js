@@ -4,7 +4,7 @@ const input = fs.readFileSync(require.resolve('./input.txt')).toString().slice(0
 
 // Part 1 ---------------------------------------------------------------------
 /*
-    Change all letters to box drawing chars
+    1. Change all letters to box drawing chars
 
     const [N, E, S, W] = [0, 1, 2, 4]
 
@@ -34,20 +34,23 @@ const [eg0, eg1] = eg.split('\n\n');
 
 const inputSymbols = {'|': 0, '-': 0, 'L': 0, 'J': 0, 7: 0, 'F': 0};
 
-const placeholder = input => input
+const printBoxChar = input => input
     .replaceAll('.', '·')
     .replaceAll('|', '│')
     .replaceAll('-', '─')
     .replaceAll('L', '└')
     .replaceAll('J', '┘')
     .replaceAll('7', '┐')
-    .replaceAll('F', '┌')  // ahhh much better
+    .replaceAll('F', '┌')
+    // ahhh much better
 
 console.log('1) eg0: ');
-console.log(placeholder(eg0));
+console.log(printBoxChar(eg0));
+
 console.log('\n');
+
 console.log('1) eg1: ');
-console.log(placeholder(eg1));
+console.log(printBoxChar(eg1));
 
 // console.log('\n');
 // console.log('1) input: ');

@@ -35,7 +35,7 @@ If the animal had entered this loop in the northwest corner, the sketch would in
 
 ```
 .....
-.<em>S</em>-7.
+.S-7.
 .|.|.
 .L-J.
 .....
@@ -93,7 +93,7 @@ You can count the distance each tile in the loop is from the starting point like
 .....
 .012.
 .1.3.
-.23<em>4</em>.
+.234.
 .....
 ```
 
@@ -114,7 +114,7 @@ Here are the distances for each tile on that loop:
 ```
 ..45.
 .236.
-01.7<em>8</em>
+01.78
 14567
 23...
 ```
